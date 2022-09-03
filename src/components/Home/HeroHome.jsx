@@ -44,7 +44,7 @@ export default class HeroHome extends Component {
   render() {
     return (
       <Hero>
-        <PageTitle>Zoheir</PageTitle>
+        <PageTitle>Zoheir Store</PageTitle>
         <Text>
           We Learning <Span>React.Js</Span>
         </Text>
