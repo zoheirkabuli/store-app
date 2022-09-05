@@ -13,6 +13,9 @@ const Cards = styled.div`
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
   margin-top: 2rem;
+  @media screen and (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  } ;
 `;
 
 export default class ProductsPage extends Component {
