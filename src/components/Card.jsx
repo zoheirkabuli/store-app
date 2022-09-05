@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { FaPlus } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const ProdCard = styled.div`
   background-color: #ececec;
@@ -25,8 +26,14 @@ const CardBody = styled.div`
   gap: 2rem;
 `;
 
-const ProdTitle = styled.h3`
+const ProdTitle = styled(Link)`
   margin: 0;
+  color: ${(props) => props.theme.color.body};
+  font-weight: bold;
+
+  &:hover {
+    color: ${(props) => props.theme.color.primary};
+  }
 `;
 
 const ProdCost = styled.p`
@@ -54,9 +61,13 @@ const Plus = styled(FaPlus)`
 `;
 
 export default class Card extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      id: props.product.id,
+      name: props.product.title,
+      photo: props.product.image,
+      cost: props.product.price,
       count: 0,
     };
   }
@@ -76,14 +87,16 @@ export default class Card extends Component {
   };
 
   render() {
-    const { photo, name, cost } = this.props;
+    const { id, photo, name, cost } = this.state;
     const { count } = this.state;
 
     return (
       <ProdCard>
         <Image src={photo} />
         <CardBody>
-          <ProdTitle>{name}</ProdTitle>
+          <ProdTitle to={`/products/${id}`}>
+            {name}
+          </ProdTitle>
           <ProdCost>
             {cost} $ {count ? `* ${count} = ${Number(cost) * count} $` : ""}
           </ProdCost>

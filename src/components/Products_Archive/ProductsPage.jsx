@@ -1,41 +1,34 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import axios from "axios";
+
+// components
+
 import Card from "../Card";
 
 const Cards = styled.div`
-  display: flex;
-  justify-content: center;
+  align-self: center;
+  width: 90%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
-  padding: 2rem 0;
-  flex-wrap: wrap;
-
-  & > * {
-    width: 20%;
-  }
-
-  @media screen and (max-width: 768px) {
-    & > * {
-      width: 45%;
-    }
-  }
+  margin-top: 2rem;
 `;
 
-export default class HomeCards extends Component {
+export default class ProductsPage extends Component {
   constructor() {
     super();
     this.state = {
-      numberOfProds: 4,
       products: [],
     };
   }
+
   componentDidMount() {
-    axios.get(`/products?limit=${this.state.numberOfProds}`).then((result) =>
-      this.setState({
-        products: result,
-      })
-    );
+    axios
+      .get("/products")
+      .then((result) => this.setState({ products: result }));
   }
+
   render() {
     const { products } = this.state;
     return (

@@ -32,3 +32,11 @@ a {
   text-decoration: none;
   transition: 0.3s;
 }
+
+/* main content */
+
+#main-content {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 2rem;
+}

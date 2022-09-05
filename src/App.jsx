@@ -4,7 +4,8 @@ import { Routes, Route } from "react-router-dom";
 // components
 import MainHeader from "./components/MainHeader";
 import HomePage from "./components/Home/HomePage";
-import ProductsPage from "./components/Products/ProductsPage";
+import ProductsPage from "./components/Products_Archive/ProductsPage";
+import ProductPage from "./components/Product_single/ProductPage";
 import MainFooter from "./components/MainFooter";
 
 export default class App extends Component {
@@ -14,7 +15,8 @@ export default class App extends Component {
         <MainHeader />
         <div id="main-content">
           <Routes>
-            <Route path="/products" element={<ProductsPage />} />
+            <Route path="/products/:productId" element={<ProductPage />} />
+            <Route path="/products" element={<ProductsPage />}></Route>
             <Route path="/" element={<HomePage />} />
           </Routes>
         </div>
