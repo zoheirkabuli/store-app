@@ -46,7 +46,7 @@ export default class HeroHome extends Component {
       <Hero>
         <PageTitle>Zoheir Store</PageTitle>
         <Text>
-          We Learning <Span>React.Js</Span>
+          We're Learning <Span>React.Js</Span>
         </Text>
       </Hero>
     );

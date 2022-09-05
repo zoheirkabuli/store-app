@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import logo from "../images/logo.png";
 import { FaBars } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Header = styled.header`
   position: sticky;
@@ -29,7 +30,7 @@ const HeaderWrapper = styled.div`
   }
 `;
 
-const SiteLogo = styled.a`
+const SiteLogo = styled(Link)`
   display: flex;
 `;
 
@@ -42,17 +43,6 @@ const NavMenu = styled.ul`
   margin: 0;
   transition: all 0.3s;
 
-  li {
-    a {
-      color: ${(props) => props.theme.color.body};
-      font-weight: 700;
-    }
-
-    a:hover {
-      color: ${(props) => props.theme.color.primary};
-    }
-  }
-
   @media (max-width: 768px) {
     width: 100%;
     flex-direction: column;
@@ -60,6 +50,15 @@ const NavMenu = styled.ul`
     max-height: ${(props) => (props.isMenuOpen ? "100vh" : "0")};
     opacity: ${(props) => (props.isMenuOpen ? "1" : "0")};
     overflow: hidden;
+  }
+`;
+
+const LinkTo = styled(Link)`
+  color: ${(props) => props.theme.color.body};
+  font-weight: 700;
+
+  &:hover {
+    color: ${(props) => props.theme.color.primary};
   }
 `;
 
@@ -89,7 +88,7 @@ export default class MainHeader extends Component {
     return (
       <Header>
         <HeaderWrapper>
-          <SiteLogo href="http://localhost:3000/">
+          <SiteLogo to="/">
             <img src={logo} alt="" />
           </SiteLogo>
           <ToggleBtn onClick={this.mobileMenuHandler}>
@@ -97,13 +96,13 @@ export default class MainHeader extends Component {
           </ToggleBtn>
           <NavMenu isMenuOpen={isMenuOpen}>
             <li>
-              <a href="http://localhost:3000/">Home</a>
+              <LinkTo to="/">Home</LinkTo>
             </li>
             <li>
-              <a href="http://localhost:3000/">Products</a>
+              <LinkTo to="/products">Products</LinkTo>
             </li>
             <li>
-              <a href="http://localhost:3000/">About Us</a>
+              <LinkTo to={"/"}>About Us</LinkTo>
             </li>
           </NavMenu>
         </HeaderWrapper>
