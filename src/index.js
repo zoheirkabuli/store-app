@@ -27,9 +27,9 @@ axios.interceptors.response.use((response) => {
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <ThemeProvider theme={theme}>
-    <BrowserRouter>
+  <BrowserRouter>
+    <ThemeProvider theme={theme}>
       <App />
-    </BrowserRouter>
-  </ThemeProvider>
+    </ThemeProvider>
+  </BrowserRouter>
 );

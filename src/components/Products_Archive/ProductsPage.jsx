@@ -5,6 +5,7 @@ import axios from "axios";
 // components
 
 import Card from "../Card";
+import Loading from "../Loading";
 
 const Cards = styled.div`
   align-self: center;
@@ -36,9 +37,11 @@ export default class ProductsPage extends Component {
     const { products } = this.state;
     return (
       <Cards>
-        {products.map((product) => (
-          <Card key={product.id} product={product} />
-        ))}
+        {products.length ? (
+          products.map((product) => <Card key={product.id} product={product} />)
+        ) : (
+          <Loading />
+        )}
       </Cards>
     );
   }

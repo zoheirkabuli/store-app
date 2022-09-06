@@ -15,9 +15,11 @@ export default class App extends Component {
         <MainHeader />
         <div id="main-content">
           <Routes>
-            <Route path="/products/:productId" element={<ProductPage />} />
-            <Route path="/products" element={<ProductsPage />}></Route>
             <Route path="/" element={<HomePage />} />
+            <Route path="/products">
+              <Route index element={<ProductsPage />} />
+              <Route path=":productId" element={<ProductPage />} />
+            </Route>
           </Routes>
         </div>
         <MainFooter />
