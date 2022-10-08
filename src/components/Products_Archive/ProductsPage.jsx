@@ -1,6 +1,8 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
-import axios from "axios";
+
+// Context
+import { ProductsContext } from "../../context/ProductsContextProvider";
 
 // components
 
@@ -19,30 +21,19 @@ const Cards = styled.div`
   } ;
 `;
 
-export default class ProductsPage extends Component {
-  constructor() {
-    super();
-    this.state = {
-      products: [],
-    };
-  }
+const ProductsPage = () => {
+  const products = useContext(ProductsContext);
+  
 
-  componentDidMount() {
-    axios
-      .get("/products")
-      .then((result) => this.setState({ products: result }));
-  }
+  return (
+    <Cards>
+      {products.length ? (
+        products.map((product) => <Card key={product.id} product={product} />)
+      ) : (
+        <Loading />
+      )}
+    </Cards>
+  );
+};
 
-  render() {
-    const { products } = this.state;
-    return (
-      <Cards>
-        {products.length ? (
-          products.map((product) => <Card key={product.id} product={product} />)
-        ) : (
-          <Loading />
-        )}
-      </Cards>
-    );
-  }
-}
+export default ProductsPage;

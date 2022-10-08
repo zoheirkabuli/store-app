@@ -1,7 +1,9 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import Card from "../Card";
+
+// Context
+import { ProductsContext } from "../../context/ProductsContextProvider";
 
 const Cards = styled.div`
   display: flex;
@@ -21,29 +23,15 @@ const Cards = styled.div`
   }
 `;
 
-export default class HomeCards extends Component {
-  constructor() {
-    super();
-    this.state = {
-      numberOfProds: 4,
-      products: [],
-    };
-  }
-  componentDidMount() {
-    axios.get(`/products?limit=${this.state.numberOfProds}`).then((result) =>
-      this.setState({
-        products: result,
-      })
-    );
-  }
-  render() {
-    const { products } = this.state;
-    return (
-      <Cards>
-        {products.map((product) => (
-          <Card key={product.id} product={product} />
-        ))}
-      </Cards>
-    );
-  }
-}
+const HomeCards = () => {
+  const products = useContext(ProductsContext);
+  return (
+    <Cards>
+      {products.slice(0, 4).map((product) => (
+        <Card key={product.id} product={product} />
+      ))}
+    </Cards>
+  );
+};
+
+export default HomeCards;

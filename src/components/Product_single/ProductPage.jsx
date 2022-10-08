@@ -1,25 +1,21 @@
-import React, { Component } from "react";
-import WithRouter from "../WithRouter";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-class ProductPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      productId: Number(props.params.productId),
-      product: {},
+//
+import { getProduct } from "../../services/api";
+
+const ProductPage = () => {
+  const [product, setProduct] = useState({});
+  const { productId } = useParams();
+
+  useEffect(() => {
+    const fetchAPI = async () => {
+      setProduct(await getProduct(productId));
     };
-  }
 
-  componentDidMount() {
-    axios
-      .get(`/products/${this.state.productId}`)
-      .then((result) => this.setState({ product: result }));
-  }
-  render() {
-    const { product } = this.state;
-    return <div>{product.title}</div>;
-  }
-}
+    fetchAPI();
+  }, []);
+  return <div>{product.title}</div>;
+};
 
-export default WithRouter(ProductPage);
+export default ProductPage;

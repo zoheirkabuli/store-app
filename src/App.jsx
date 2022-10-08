@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Routes, Route } from "react-router-dom";
 
+import ProductsContextProvider from "./context/ProductsContextProvider";
+
 // components
 import MainHeader from "./components/MainHeader";
 import HomePage from "./components/Home/HomePage";
@@ -11,7 +13,7 @@ import MainFooter from "./components/MainFooter";
 export default class App extends Component {
   render() {
     return (
-      <>
+      <ProductsContextProvider>
         <MainHeader />
         <div id="main-content">
           <Routes>
@@ -23,7 +25,7 @@ export default class App extends Component {
           </Routes>
         </div>
         <MainFooter />
-      </>
+      </ProductsContextProvider>
     );
   }
 }
