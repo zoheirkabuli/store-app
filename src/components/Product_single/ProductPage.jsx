@@ -14,7 +14,7 @@ const ProductPage = () => {
     };
 
     fetchAPI();
-  }, []);
+  }, [productId]);
   return <div>{product.title}</div>;
 };
 
