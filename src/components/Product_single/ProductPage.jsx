@@ -1,20 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
 
-//
-import { getProduct } from "../../services/api";
+// Context
+import { ProductsContext } from "../../context/ProductsContextProvider";
 
 const ProductPage = () => {
-  const [product, setProduct] = useState({});
   const { productId } = useParams();
-
-  useEffect(() => {
-    const fetchAPI = async () => {
-      setProduct(await getProduct(productId));
-    };
-
-    fetchAPI();
-  }, [productId]);
+  const products = useContext(ProductsContext);
+  const product = products[productId - 1];
   return <div>{product.title}</div>;
 };
 
