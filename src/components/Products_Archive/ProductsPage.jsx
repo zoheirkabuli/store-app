@@ -18,13 +18,11 @@ const Cards = styled.div`
   margin-top: 2rem;
   @media screen and (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
-  } ;
+  }
 `;
 
 const ProductsPage = () => {
   const products = useContext(ProductsContext);
-  
-
   return (
     <Cards>
       {products.length ? (
