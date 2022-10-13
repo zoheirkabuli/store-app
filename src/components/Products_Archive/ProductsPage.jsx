@@ -13,7 +13,7 @@ const Cards = styled.div`
   align-self: center;
   width: 90%;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 2rem;
   margin-top: 2rem;
   @media screen and (max-width: 768px) {

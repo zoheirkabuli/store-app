@@ -1,8 +1,16 @@
-import React, { Component } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import logo from "../images/logo.png";
-import { FaBars } from "react-icons/fa";
+
 import { Link } from "react-router-dom";
+
+// icons
+import { FaShoppingBag } from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
+
+// context
+
+import { CartContext } from "../context/CartContextProvider";
 
 const Header = styled.header`
   position: sticky;
@@ -21,7 +29,7 @@ const HeaderWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  gap: 1rem;
+  gap: 3rem;
   width: 95%;
   flex-wrap: wrap;
 
@@ -32,6 +40,9 @@ const HeaderWrapper = styled.div`
 
 const SiteLogo = styled(Link)`
   display: flex;
+  @media (max-width: 768px) {
+    order: 2;
+  }
 `;
 
 const NavMenu = styled.ul`
@@ -42,6 +53,13 @@ const NavMenu = styled.ul`
   padding: 0;
   margin: 0;
   transition: all 0.3s;
+  margin-inline-start: auto;
+
+  li:nth-child(1) {
+    @media (max-width: 768px) {
+      margin-top: 1rem;
+    }
+  }
 
   @media (max-width: 768px) {
     width: 100%;
@@ -50,6 +68,7 @@ const NavMenu = styled.ul`
     max-height: ${(props) => (props.isMenuOpen ? "100vh" : "0")};
     opacity: ${(props) => (props.isMenuOpen ? "1" : "0")};
     overflow: hidden;
+    order: 4;
   }
 `;
 
@@ -66,47 +85,65 @@ const ToggleBtn = styled.div`
   display: none;
   @media (max-width: 768px) {
     display: flex;
+    order: 3;
   }
 `;
 
-export default class MainHeader extends Component {
-  constructor() {
-    super();
-    this.state = {
-      isMenuOpen: false,
-    };
-  }
+const Cart = styled.div`
+  display: flex;
+  position: relative;
 
-  mobileMenuHandler = () => {
-    this.setState((prevState) => ({
-      isMenuOpen: !prevState.isMenuOpen,
-    }));
+  @media (max-width: 768px) {
+    order: 1;
+  }
+`;
+
+const CartIcon = styled(FaShoppingBag)`
+  fill: ${(props) => props.theme.color.primary};
+  width: 2rem;
+  height: 2rem;
+`;
+
+const TotalItems = styled.p`
+  margin: 0;
+`;
+
+const MainHeader = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const { cart } = useContext(CartContext);
+
+  const mobileMenuHandler = () => {
+    setIsMenuOpen((prevIsMenuOpen) => !prevIsMenuOpen);
   };
 
-  render() {
-    const { isMenuOpen } = this.state;
-    return (
-      <Header>
-        <HeaderWrapper>
-          <SiteLogo to="/">
-            <img src={logo} alt="" />
-          </SiteLogo>
-          <ToggleBtn onClick={this.mobileMenuHandler}>
-            <FaBars />
-          </ToggleBtn>
-          <NavMenu isMenuOpen={isMenuOpen}>
-            <li>
-              <LinkTo to="/">Home</LinkTo>
-            </li>
-            <li>
-              <LinkTo to="/products">Products</LinkTo>
-            </li>
-            <li>
-              <LinkTo to={"/"}>About Us</LinkTo>
-            </li>
-          </NavMenu>
-        </HeaderWrapper>
-      </Header>
-    );
-  }
-}
+  return (
+    <Header>
+      <HeaderWrapper>
+        <SiteLogo to="/">
+          <img src={logo} alt="" />
+        </SiteLogo>
+        <ToggleBtn onClick={mobileMenuHandler}>
+          <FaBars />
+        </ToggleBtn>
+        <NavMenu isMenuOpen={isMenuOpen}>
+          <li>
+            <LinkTo to="/">Home</LinkTo>
+          </li>
+          <li>
+            <LinkTo to="/products">Products</LinkTo>
+          </li>
+          <li>
+            <LinkTo to={"/"}>About Us</LinkTo>
+          </li>
+        </NavMenu>
+        <Cart>
+          <CartIcon />
+          <TotalItems>{cart.totalItems}</TotalItems>
+        </Cart>
+      </HeaderWrapper>
+    </Header>
+  );
+};
+
+export default MainHeader;

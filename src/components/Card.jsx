@@ -1,8 +1,19 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
-import { FaPlus } from "react-icons/fa";
-import { FaMinus } from "react-icons/fa";
+
 import { Link } from "react-router-dom";
+
+// helper
+
+import { isInCart, quantityCount } from "../helper/functions";
+
+// context
+
+import { CartContext } from "../context/CartContextProvider";
+
+// icons
+
+import { FaTrash } from "react-icons/fa";
 
 const ProdCard = styled.div`
   background-color: #ececec;
@@ -24,6 +35,8 @@ const CardBody = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  flex: 1 0 0;
+  justify-content: space-between;
 `;
 
 const ProdTitle = styled(Link)`
@@ -43,70 +56,94 @@ const ProdCost = styled.p`
   color: white;
   padding: 0.25rem 1rem;
   border-radius: ${(props) => props.theme.borderRadius};
+  margin-top: auto;
 `;
 
-const ProdCounter = styled.div`
+const BtnHolder = styled.div`
   display: flex;
-  align-items: center;
-  gap: 1rem;
+  gap: 2rem;
 `;
 
-const Minus = styled(FaMinus)`
-  opacity: ${(props) => (props.number ? "1" : "0.25")};
-  cursor: ${(props) => (props.number ? "pointer" : "auto")};
+const AddToCart = styled.button`
+  width: 100%;
+  padding: 1rem;
+  font-weight: bold;
+  border-radius: 1rem;
+  border: 0;
+  color: white;
+  background-color: ${(props) => props.theme.color.primary};
 `;
 
-const Plus = styled(FaPlus)`
-  cursor: pointer;
+const Btn = styled.button`
+  width: 100%;
+  padding: 1rem;
+  font-weight: bold;
+  border-radius: 1rem;
+  border: 0;
+  color: white;
+  background-color: ${(props) => props.theme.color.primary};
 `;
 
-export default class Card extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: props.product.id,
-      name: props.product.title,
-      photo: props.product.image,
-      cost: props.product.price,
-      count: 0,
-    };
-  }
+const Quantity = styled.p`
+  margin: 0;
+  align-self: center;
+`;
 
-  minusHandler = () => {
-    if (this.state.count > 0) {
-      this.setState((prevState) => ({
-        count: prevState.count - 1,
-      }));
-    }
-  };
+const Card = (props) => {
+  const { cart, cartDispatch } = useContext(CartContext);
 
-  plusHandler = () => {
-    this.setState((prevState) => ({
-      count: prevState.count + 1,
-    }));
-  };
+  const { id, image: photo, title: name, price: cost } = props.product;
 
-  render() {
-    const { id, photo, name, cost } = this.state;
-    const { count } = this.state;
+  return (
+    <ProdCard>
+      <Image src={photo} />
+      <CardBody>
+        <ProdTitle to={`/products/${id}`}>{name}</ProdTitle>
+        <ProdCost>{cost} $</ProdCost>
+        <BtnHolder>
+          {quantityCount(cart, id) > 1 && (
+            <Btn
+              onClick={() =>
+                cartDispatch({ type: "DECREASE", product: props.product })
+              }
+            >
+              -
+            </Btn>
+          )}
 
-    return (
-      <ProdCard>
-        <Image src={photo} />
-        <CardBody>
-          <ProdTitle to={`/products/${id}`}>
-            {name}
-          </ProdTitle>
-          <ProdCost>
-            {cost} $ {count ? `* ${count} = ${Number(cost) * count} $` : ""}
-          </ProdCost>
-          <ProdCounter>
-            <Minus number={count} onClick={this.minusHandler} />
-            {count}
-            <Plus onClick={this.plusHandler} />
-          </ProdCounter>
-        </CardBody>
-      </ProdCard>
-    );
-  }
-}
+          {quantityCount(cart, id) === 1 && (
+            <Btn
+              onClick={() =>
+                cartDispatch({ type: "REMOVE_ITEM", product: props.product })
+              }
+            >
+              <FaTrash />
+            </Btn>
+          )}
+          {quantityCount(cart, id) && (
+            <Quantity>{quantityCount(cart, id)}</Quantity>
+          )}
+          {isInCart(cart, id) ? (
+            <Btn
+              onClick={() =>
+                cartDispatch({ type: "INCREASE", product: props.product })
+              }
+            >
+              +
+            </Btn>
+          ) : (
+            <AddToCart
+              onClick={() =>
+                cartDispatch({ type: "ADD_ITEM", product: props.product })
+              }
+            >
+              Add to Cart
+            </AddToCart>
+          )}
+        </BtnHolder>
+      </CardBody>
+    </ProdCard>
+  );
+};
+
+export default Card;
