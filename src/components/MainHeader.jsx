@@ -89,7 +89,7 @@ const ToggleBtn = styled.div`
   }
 `;
 
-const Cart = styled.div`
+const Cart = styled(Link)`
   display: flex;
   position: relative;
 
@@ -100,12 +100,25 @@ const Cart = styled.div`
 
 const CartIcon = styled(FaShoppingBag)`
   fill: ${(props) => props.theme.color.primary};
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
 `;
 
 const TotalItems = styled.p`
   margin: 0;
+  display: flex;
+  font-size: 1rem;
+  width: 2rem;
+  background-color: ${(props) => props.theme.color.secondary};
+  border-radius: 50%;
+  font-weight: bold;
+  aspect-ratio: 1;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  position: absolute;
+  right: -8px;
+  top: -5px;
 `;
 
 const MainHeader = () => {
@@ -137,7 +150,7 @@ const MainHeader = () => {
             <LinkTo to={"/"}>About Us</LinkTo>
           </li>
         </NavMenu>
-        <Cart>
+        <Cart to={"cart"}>
           <CartIcon />
           <TotalItems>{cart.totalItems}</TotalItems>
         </Cart>

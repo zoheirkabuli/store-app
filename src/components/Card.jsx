@@ -72,6 +72,7 @@ const AddToCart = styled.button`
   border: 0;
   color: white;
   background-color: ${(props) => props.theme.color.primary};
+  cursor: pointer;
 `;
 
 const Btn = styled.button`
@@ -82,6 +83,7 @@ const Btn = styled.button`
   border: 0;
   color: white;
   background-color: ${(props) => props.theme.color.primary};
+  cursor: pointer;
 `;
 
 const Quantity = styled.p`
