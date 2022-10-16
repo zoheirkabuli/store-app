@@ -7,17 +7,21 @@ import { ProductsContext } from "../../context/ProductsContextProvider";
 const ProductPage = () => {
   const { productId } = useParams();
   const products = useContext(ProductsContext);
-  const { image, title, description, price, category } = products[
-    productId - 1
-  ];
+  const product = products[productId - 1];
 
   return (
     <div>
-      <img src={image} alt="" />
-      <h1>{title}</h1>
-      <p> {description} </p>
-      <p> {category} </p>
-      <p> {price} </p>
+      {product ? (
+        <>
+          <img src={product.image} alt="" />
+          <h1>{product.title}</h1>
+          <p> {product.description} </p>
+          <p> {product.category} </p>
+          <p> {product.price} </p>ss
+        </>
+      ) : (
+        <h1>Loading...</h1>
+      )}
     </div>
   );
 };
