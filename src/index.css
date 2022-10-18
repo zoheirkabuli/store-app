@@ -30,7 +30,15 @@ img {
 
 a {
   text-decoration: none;
-  transition: 0.3s;
+  
+}
+
+/* root*/
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 /* main content */
@@ -39,5 +47,5 @@ a {
   display: flex;
   flex-direction: column;
   padding-bottom: 2rem;
-  min-height: 90vh;
+  flex: 1 0 0;
 }

@@ -10,19 +10,7 @@ import ProductsPage from "./components/Products_Archive/ProductsPage";
 import ProductPage from "./components/Product_single/ProductPage";
 import CartPage from "./components/Cart/CartPage";
 
-//
 
-// const router = createBrowserRouter(
-//   createRoutesFromElements(
-//     <Route path="/" element={<MainLayout />}>
-//       <Route index element={<HomePage />} />
-//       <Route path="/products">
-//         <Route index element={<ProductsPage />} />
-//         <Route path=":productId" element={<ProductPage />} />
-//       </Route>
-//     </Route>
-//   )
-// );
 
 const newRouter = createBrowserRouter([
   {

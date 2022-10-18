@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import logo from "../images/logo.png";
+import logo from "../images/Logo.webp";
 
 import { Link } from "react-router-dom";
 
@@ -40,8 +40,10 @@ const HeaderWrapper = styled.div`
 
 const SiteLogo = styled(Link)`
   display: flex;
+  width: 4%;
   @media (max-width: 768px) {
     order: 2;
+    width: 15%;
   }
 `;
 
@@ -75,6 +77,7 @@ const NavMenu = styled.ul`
 const LinkTo = styled(Link)`
   color: ${(props) => props.theme.color.body};
   font-weight: 700;
+  transition: 0.3s ease;
 
   &:hover {
     color: ${(props) => props.theme.color.primary};
